@@ -1,6 +1,7 @@
 package guru.springframework.msscbreweryclient.web.client;
 
 import guru.springframework.msscbreweryclient.web.model.BeerDto;
+import guru.springframework.msscbreweryclient.web.model.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ class BreweryClientTest {
     @Test
     void testSaveNewBeer() {
         //given
-        BeerDto beerDto = BeerDto.builder().beerName("New Beer").build();
+        BeerDto beerDto = BeerDto.builder().beerName("New Beer").beerStyle("Lager").build();
 
         URI uri = client.saveNewBeer(beerDto);
 
@@ -40,7 +41,7 @@ class BreweryClientTest {
     @Test
     void testUpdateBeer() {
         //given
-        BeerDto beerDto = BeerDto.builder().beerName("New Beer").build();
+        BeerDto beerDto = BeerDto.builder().beerName("New Beer").beerStyle("IPA").build();
 
         client.updateBeer(UUID.randomUUID(), beerDto);
 
@@ -49,5 +50,36 @@ class BreweryClientTest {
     @Test
     void testDeleteBeer() {
         client.deleteBeer(UUID.randomUUID());
+    }
+
+    @Test
+    void testGetCustomerById() {
+        CustomerDto customerDto = client.getCustomerById(UUID.randomUUID());
+        assertNotNull(customerDto);
+    }
+
+    @Test
+    void testSaveNewCustomer() {
+        //given
+        CustomerDto customerDto = CustomerDto.builder().name("Joe").build();
+
+        URI uri = client.saveNewCustomer(customerDto);
+
+        assertNotNull(uri);
+
+        System.out.println(uri.toString());
+    }
+
+    @Test
+    void testUpdateCustomer() {
+        //given
+        CustomerDto customerDto = CustomerDto.builder().name("Jim").build();
+
+        client.updateCustomer(UUID.randomUUID(), customerDto);
+    }
+
+    @Test
+    void testDeleteCustomer() {
+        client.deleteCustomer(UUID.randomUUID());
     }
 }
